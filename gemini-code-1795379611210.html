@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f4c81" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="سجل الدرجات" />
+  <title>سجل الدرجات الإلكتروني للمدرس</title>
+  <link id="dynamic-manifest" rel="manifest" />
+  <link id="apple-touch-icon" rel="apple-touch-icon" />
+  <style>
+    :root {
+      --primary: #0f4c81;
+      --primary-dark: #093256;
+      --primary-light: #e8f1f8;
+      --accent: #0d9488;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #cbd5e1;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --warning: #b45309;
+      --warning-bg: #fef3c7;
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --exempt: #6d28d9;
+      --exempt-bg: #ede9fe;
+      --radius: 12px;
+      --shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      direction: rtl;
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .app-logo-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .app-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .save-status {
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.16);
+      padding: 3px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 8px 13px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      color: var(--text);
+      transition: 0.15s ease;
+    }
+
+    .btn:hover {
+      filter: brightness(0.97);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-outline-light {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-sm {
+      padding: 5px 9px;
+      font-size: 12px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 16px auto;
+      padding: 0 14px 32px;
+    }
+
+    .install-banner {
+      background: #fffbeb;
+      border: 1px solid #f59e0b;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .official-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: center;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .school-logo-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-weight: 800;
+      color: var(--primary);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .school-logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .header-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px 14px;
+      font-size: 13px;
+    }
+
+    .selectors-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      align-items: end;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #fff;
+      color: var(--text);
+    }
+
+    input[type="number"] {
+      width: 72px;
+      text-align: center;
+      padding: 6px 4px;
+    }
+
+    input:disabled {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      min-width: 1120px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 7px 6px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    th {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    th.sub-th {
+      background: #1e6091;
+      font-size: 11.5px;
+    }
+
+    td.student-name-cell {
+      text-align: right;
+      font-weight: 700;
+      white-space: nowrap;
+      padding-right: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .b-pass { background: var(--success-bg); color: var(--success); }
+    .b-fail { background: var(--danger-bg); color: var(--danger); }
+    .b-supp { background: var(--warning-bg); color: var(--warning); }
+    .b-exempt { background: var(--exempt-bg); color: var(--exempt); }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 60;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: var(--radius);
+      max-width: 720px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 18px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #0f172a;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      z-index: 80;
+      display: none;
+      box-shadow: var(--shadow);
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    .rights-footer {
+      max-width: 1400px;
+      margin: 8px auto 28px;
+      padding: 14px 18px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    @media print {
+      .app-header, .install-banner, .no-print, .rights-footer button, .toast, .modal-backdrop {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+      }
+      .card {
+        box-shadow: none;
+        border: 1px solid #999;
+      }
+      @page {
+        size: A4 landscape;
+        margin: 8mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-box">
+        <div class="app-logo-badge" id="headerBadge">سج</div>
+        <div>
+          <h1 class="app-title">سجل الدرجات الإلكتروني للمدرس</h1>
+          <div class="save-status" id="saveStatus">محفوظ تلقائياً ✓</div>
+        </div>
+      </div>
+
+      <div class="header-actions no-print">
+        <button class="btn btn-primary" onclick="openModal('studentModal')">+ إضافة طلاب</button>
+        <button class="btn btn-outline-light" onclick="openModal('structureModal')">الصفوف والشعب والمواد</button>
+        <button class="btn btn-outline-light" onclick="openModal('exemptionModal')">الإعفاء والدرجات</button>
+        <button class="btn btn-outline-light" onclick="openGeneralExemptionReport()">كشف الإعفاء العام</button>
+        <button class="btn btn-outline-light" onclick="openModal('headerModal')">الترويسة والحقوق</button>
+        <button class="btn btn-outline-light" onclick="exportCSV()">تصدير Excel/CSV</button>
+        <button class="btn btn-outline-light" onclick="exportBackupJSON()">نسخة احتياطية</button>
+        <button class="btn btn-outline-light" onclick="window.print()">طباعة</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="install-banner" id="installBanner">
+      <div>
+        <strong>تثبيت التطبيق على شاشة الموبايل:</strong>
+        <span>يمكنك إضافته إلى الشاشة الرئيسية للوصول السريع والاستخدام كبرنامج مستقل.</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" id="installBtn" onclick="triggerInstall()">تثبيت الآن</button>
+        <button class="btn btn-sm" onclick="openModal('installGuideModal')">طريقة التثبيت</button>
+        <button class="btn btn-sm" onclick="document.getElementById('installBanner').style.display='none'">إخفاء</button>
+      </div>
+    </div>
+
+    <!-- الترويسة الإدارية الرسمية -->
+    <section class="card">
+      <div class="official-header">
+        <div class="school-logo-box" id="logoPreviewBox">شعار</div>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--primary);" id="viewDirectorate">المديرية العامة للتربية</div>
+          <div style="font-size:13px;color:var(--muted);" id="viewSubDept">القسم الفرعي / الإشراف التربوي</div>
+          <div style="font-size:17px;font-weight:800;margin-top:2px;" id="viewSchool">اسم المدرسة</div>
+        </div>
+        <div class="no-print">
+          <button class="btn btn-sm" onclick="openModal('headerModal')">تعديل الترويسة</button>
+        </div>
+      </div>
+
+      <div class="header-meta-grid">
+        <div><strong>المدير:</strong> <span id="viewPrincipal">-</span></div>
+        <div><strong>المدرس:</strong> <span id="viewTeacher">-</span></div>
+        <div><strong>العام الدراسي:</strong> <span id="viewYear">-</span></div>
+        <div><strong>درجة النجاح / الإعفاء الفردي:</strong> <span id="viewThresholds">-</span></div>
+      </div>
+    </section>
+
+    <!-- اختيار الصف والشعبة والمادة -->
+    <section class="card no-print">
+      <div class="selectors-bar">
+        <div>
+          <label for="classSelect">الصف</label>
+          <select id="classSelect" onchange="onClassChange()"></select>
+        </div>
+        <div>
+          <label for="sectionSelect">الشعبة</label>
+          <select id="sectionSelect" onchange="renderAll()"></select>
+        </div>
+        <div>
+          <label for="subjectSelect">المادة الدراسية</label>
+          <select id="subjectSelect" onchange="renderAll()"></select>
+        </div>
+        <div>
+          <label for="searchInput">بحث باسم الطالب</label>
+          <input type="text" id="searchInput" placeholder="اكتب اسم الطالب للبحث..." oninput="renderTable()" />
+        </div>
+      </div>
+    </section>
+
+    <!-- الإحصائيات السريعة -->
+    <section class="stats-row" id="statsRow"></section>
+
+    <!-- جدول الدرجات والنتائج -->
+    <section class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2">ت</th>
+              <th rowspan="2">اسم الطالب</th>
+              <th colspan="4">الفصل الأول</th>
+              <th rowspan="2">نصف السنة</th>
+              <th colspan="4">الفصل الثاني</th>
+              <th rowspan="2">السعي السنوي</th>
+              <th rowspan="2">نهائي دور 1</th>
+              <th rowspan="2">نهائية دور 1</th>
+              <th rowspan="2">نهائي دور 2</th>
+              <th rowspan="2">نهائية دور 2</th>
+              <th rowspan="2">النتيجة النهائية</th>
+              <th rowspan="2" class="no-print">إجراءات</th>
+            </tr>
+            <tr>
+              <th class="sub-th">شهر 1</th>
+              <th class="sub-th">شهر 2</th>
+              <th class="sub-th">شهر 3</th>
+              <th class="sub-th">معدل ف1</th>
+              <th class="sub-th">شهر 1</th>
+              <th class="sub-th">شهر 2</th>
+              <th class="sub-th">شهر 3</th>
+              <th class="sub-th">معدل ف2</th>
+            </tr>
+          </thead>
+          <tbody id="gradesTbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- تذييل حقوق التصميم فقط -->
+  <footer class="rights-footer">
+    <span id="rightsTextDisplay">جميع الحقوق محفوظة © تصميم وتطوير: الاستاذ سامر خالد السلماني</span>
+    <button class="btn btn-sm" onclick="openModal('headerModal')">تعديل حقوق التصميم</button>
+  </footer>
+
+  <!-- نافذة إضافة الطلاب -->
+  <div class="modal-backdrop" id="studentModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">إضافة طلاب إلى الشعبة الحالية</h3>
+        <button class="btn btn-sm" onclick="closeModal('studentModal')">✕</button>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>إضافة طالب واحد</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" id="singleStudentInput" placeholder="الاسم الثلاثي للطالب" />
+            <button class="btn btn-primary" onclick="addSingleStudent()">إضافة</button>
+          </div>
+        </div>
+        <div>
+          <label>استيراد من ملف (TXT / CSV)</label>
+          <input type="file" id="studentsFileInput" accept=".txt,.csv" onchange="importStudentsFromFile(event)" />
+        </div>
+      </div>
+      <div style="margin-top:12px;">
+        <label>أو لصق قائمة أسماء (اسم واحد في كل سطر)</label>
+        <textarea id="bulkStudentsInput" rows="6" placeholder="أحمد محمد علي&#10;مصطفى حسين كريم"></textarea>
+        <div style="margin-top:8px;display:flex;gap:8px;justify-content:flex-end;">
+          <button class="btn btn-primary" onclick="addBulkStudents()">اعتماد القائمة</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة إدارة الصفوف والشعب والمواد -->
+  <div class="modal-backdrop" id="structureModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">إدارة الصفوف والشعب والمواد</h3>
+        <button class="btn btn-sm" onclick="closeModal('structureModal')">✕</button>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>إضافة صف جديد</label>
+          <div style="display:flex;gap:6px;">
+            <input type="text" id="newClassName" placeholder="مثال: السادس الإعدادي" />
+            <button class="btn btn-primary btn-sm" onclick="addClassItem()">إضافة</button>
+          </div>
+        </div>
+        <div>
+          <label>إضافة شعبة للصف المحدد</label>
+          <div style="display:flex;gap:6px;">
+            <input type="text" id="newSectionName" placeholder="مثال: أ أو ب" />
+            <button class="btn btn-primary btn-sm" onclick="addSectionItem()">إضافة</button>
+          </div>
+        </div>
+        <div>
+          <label>إضافة مادة للصف المحدد</label>
+          <div style="display:flex;gap:6px;">
+            <input type="text" id="newSubjectName" placeholder="مثال: الرياضيات" />
+            <button class="btn btn-primary btn-sm" onclick="addSubjectItem()">إضافة</button>
+          </div>
+        </div>
+      </div>
+      <hr style="margin:14px 0;border:none;border-top:1px solid var(--border);" />
+      <div class="grid-2">
+        <div>
+          <strong>الشعب الحالية:</strong>
+          <ul id="sectionsListAdmin" style="padding-right:18px;margin:6px 0;"></ul>
+        </div>
+        <div>
+          <strong>المواد الحالية:</strong>
+          <ul id="subjectsListAdmin" style="padding-right:18px;margin:6px 0;"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة إعدادات الإعفاء والدرجات -->
+  <div class="modal-backdrop" id="exemptionModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">إعدادات الدرجات ونظام الإعفاء (الفردي والعام)</h3>
+        <button class="btn btn-sm" onclick="closeModal('exemptionModal')">✕</button>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>درجة النجاح الصغرى</label>
+          <input type="number" id="cfgPassMark" min="1" max="100" />
+        </div>
+        <div>
+          <label>درجة الإعفاء الفردي (يدوي)</label>
+          <input type="number" id="cfgIndividualExempt" min="50" max="100" />
+        </div>
+        <div>
+          <label>تفعيل نظام الإعفاء العام</label>
+          <select id="cfgGeneralEnabled">
+            <option value="true">مفعّل</option>
+            <option value="false">معطّل</option>
+          </select>
+        </div>
+        <div>
+          <label>المعدل العام المطلوب للإعفاء العام (يدوي)</label>
+          <input type="number" id="cfgGeneralAvg" min="50" max="100" />
+        </div>
+        <div>
+          <label>أدنى درجة سعي لأي مادة للإعفاء العام (يدوي)</label>
+          <input type="number" id="cfgGeneralMinSubject" min="0" max="100" />
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:flex-end;gap:8px;">
+        <button class="btn btn-primary" onclick="saveExemptionConfig()">حفظ الإعدادات</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة كشف الإعفاء العام -->
+  <div class="modal-backdrop" id="generalReportModal">
+    <div class="modal" style="max-width:860px;">
+      <div class="modal-header">
+        <h3 class="modal-title">كشف الإعفاء العام والمعدلات (الشعبة الحالية)</h3>
+        <button class="btn btn-sm" onclick="closeModal('generalReportModal')">✕</button>
+      </div>
+      <div id="generalReportBody"></div>
+    </div>
+  </div>
+
+  <!-- نافذة الترويسة والشعار وحقوق التصميم -->
+  <div class="modal-backdrop" id="headerModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">الترويسة الإدارية والشعار وحقوق التصميم</h3>
+        <button class="btn btn-sm" onclick="closeModal('headerModal')">✕</button>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>المديرية العامة للتربية</label>
+          <input type="text" id="inpDirectorate" />
+        </div>
+        <div>
+          <label>القسم الفرعي</label>
+          <input type="text" id="inpSubDept" />
+        </div>
+        <div>
+          <label>اسم المدرسة</label>
+          <input type="text" id="inpSchool" />
+        </div>
+        <div>
+          <label>اسم مدير المدرسة</label>
+          <input type="text" id="inpPrincipal" />
+        </div>
+        <div>
+          <label>اسم المدرس</label>
+          <input type="text" id="inpTeacher" />
+        </div>
+        <div>
+          <label>العام الدراسي</label>
+          <input type="text" id="inpYear" />
+        </div>
+        <div>
+          <label>رفع شعار المدرسة / المديرية</label>
+          <input type="file" id="inpLogoFile" accept="image/*" onchange="handleLogoUpload(event)" />
+        </div>
+        <div>
+          <label>حقوق التصميم</label>
+          <input type="text" id="inpRights" />
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <button class="btn btn-sm" onclick="clearLogo()">إزالة الشعار</button>
+        <button class="btn btn-primary" onclick="saveHeaderSettings()">حفظ الترويسة والحقوق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة طريقة التثبيت -->
+  <div class="modal-backdrop" id="installGuideModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">تثبيت التطبيق على شاشة الموبايل</h3>
+        <button class="btn btn-sm" onclick="closeModal('installGuideModal')">✕</button>
+      </div>
+      <p><strong>أندرويد (Chrome):</strong> افتح الرابط المباشر عبر HTTPS ثم اضغط على القائمة (⋮) واختر <em>تثبيت التطبيق</em> أو <em>إضافة إلى الشاشة الرئيسية</em>.</p>
+      <p><strong>آيفون (Safari):</strong> افتح الرابط المباشر عبر HTTPS في متصفح Safari ثم اضغط زر <em>المشاركة</em> واختر <em>إضافة إلى الشاشة الرئيسية</em>.</p>
+      <p style="color:var(--muted);font-size:12.5px;">ملاحظة: يجب فتح التطبيق من رابط مباشر يعمل عبر HTTPS للحصول على خيار التثبيت الكامل وحفظ البيانات على نفس الرابط.</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toastBox"></div>
+
+  <script>
+    const DB_NAME = "TeacherGradebookDB_v1";
+    const STORE_NAME = "appStateStore";
+    const LS_KEY = "teacher_gradebook_state_v1";
+    const LS_MIRROR = "teacher_gradebook_mirror_v1";
+
+    const DEFAULT_RIGHTS = "جميع الحقوق محفوظة © تصميم وتطوير: الاستاذ سامر خالد السلماني";
+
+    function createDefaultState() {
+      return {
+        meta: {
+          directorate: "المديرية العامة للتربية",
+          subDept: "القسم الفرعي للشؤون الفنية",
+          school: "مدرسة النموذج التعليمي",
+          principal: "",
+          teacher: "الاستاذ سامر خالد السلماني",
+          year: "2026 - 2027",
+          logo: "",
+          rights: DEFAULT_RIGHTS
+        },
+        config: {
+          passMark: 50,
+          individualExemptMark: 90,
+          generalExemptEnabled: true,
+          generalExemptAvg: 85,
+          generalExemptMinSubject: 75
+        },
+        classes: [
+          {
+            id: "cls-1",
+            name: "الأول المتوسط",
+            sections: ["أ", "ب"],
+            subjects: ["الرياضيات", "اللغة العربية", "العلوم", "اللغة الإنجليزية"]
+          }
+        ],
+        students: [],
+        scores: {},
+        selectedClassId: "cls-1",
+        selectedSection: "أ",
+        selectedSubject: "الرياضيات",
+        updatedAt: Date.now()
+      };
+    }
+
+    let state = createDefaultState();
+    let deferredInstallPrompt = null;
+
+    function showToast(msg) {
+      const box = document.getElementById("toastBox");
+      if (!box) return;
+      box.textContent = msg;
+      box.classList.add("show");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => box.classList.remove("show"), 2600);
+    }
+
+    function openModal(id) {
+      if (id === "exemptionModal") {
+        document.getElementById("cfgPassMark").value = state.config.passMark;
+        document.getElementById("cfgIndividualExempt").value = state.config.individualExemptMark;
+        document.getElementById("cfgGeneralEnabled").value = String(state.config.generalExemptEnabled);
+        document.getElementById("cfgGeneralAvg").value = state.config.generalExemptAvg;
+        document.getElementById("cfgGeneralMinSubject").value = state.config.generalExemptMinSubject;
+      } else if (id === "headerModal") {
+        document.getElementById("inpDirectorate").value = state.meta.directorate || "";
+        document.getElementById("inpSubDept").value = state.meta.subDept || "";
+        document.getElementById("inpSchool").value = state.meta.school || "";
+        document.getElementById("inpPrincipal").value = state.meta.principal || "";
+        document.getElementById("inpTeacher").value = state.meta.teacher || "";
+        document.getElementById("inpYear").value = state.meta.year || "";
+        document.getElementById("inpRights").value = state.meta.rights || DEFAULT_RIGHTS;
+      } else if (id === "structureModal") {
+        renderStructureAdmin();
+      }
+      document.getElementById(id).classList.add("open");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+    }
+
+    function openIDB() {
+      return new Promise((resolve, reject) => {
+        if (!("indexedDB" in window)) return reject(new Error("No IDB"));
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: "id" });
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function writeIDB(payload) {
+      try {
+        const db = await openIDB();
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        tx.objectStore(STORE_NAME).put({ id: "main", data: payload });
+      } catch (_) {}
+    }
+
+    async function readIDB() {
+      try {
+        const db = await openIDB();
+        return await new Promise((resolve) => {
+          const tx = db.transaction(STORE_NAME, "readonly");
+          const req = tx.objectStore(STORE_NAME).get("main");
+          req.onsuccess = () => resolve(req.result ? req.result.data : null);
+          req.onerror = () => resolve(null);
+        });
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function normalizeState(raw) {
+      const base = createDefaultState();
+      if (!raw || typeof raw !== "object") return base;
+      const merged = {
+        ...base,
+        ...raw,
+        meta: { ...base.meta, ...(raw.meta || {}) },
+        config: { ...base.config, ...(raw.config || {}) },
+        classes: Array.isArray(raw.classes) && raw.classes.length ? raw.classes : base.classes,
+        students: Array.isArray(raw.students) ? raw.students : [],
+        scores: raw.scores && typeof raw.scores === "object" ? raw.scores : {},
+        updatedAt: Number(raw.updatedAt) || Date.now()
+      };
+      if (!merged.meta.rights || !String(merged.meta.rights).trim()) {
+        merged.meta.rights = DEFAULT_RIGHTS;
+      }
+      return merged;
+    }
+
+    async function persistState(silent = false) {
+      state.updatedAt = Date.now();
+      const serialized = JSON.stringify(state);
+      try {
+        localStorage.setItem(LS_KEY, serialized);
+        localStorage.setItem(LS_MIRROR, serialized);
+      } catch (_) {}
+      await writeIDB(state);
+      const statusEl = document.getElementById("saveStatus");
+      if (statusEl) {
+        const t = new Date().toLocaleTimeString("ar-IQ", { hour: "2-digit", minute: "2-digit" });
+        statusEl.textContent = `محفوظ تلقائياً ✓ (${t})`;
+      }
+      if (!silent) showToast("تم حفظ البيانات");
+    }
+
+    async function loadState() {
+      const candidates = [];
+      const idbData = await readIDB();
+      if (idbData) candidates.push(idbData);
+      for (const k of [LS_KEY, LS_MIRROR]) {
+        try {
+          const raw = localStorage.getItem(k);
+          if (raw) candidates.push(JSON.parse(raw));
+        } catch (_) {}
+      }
+      if (candidates.length > 0) {
+        candidates.sort((a, b) => (Number(b.updatedAt) || 0) - (Number(a.updatedAt) || 0));
+        state = normalizeState(candidates[0]);
+      } else {
+        state = createDefaultState();
+      }
+      if (navigator.storage && navigator.storage.persist) {
+        try { await navigator.storage.persist(); } catch (_) {}
+      }
+    }
+
+    function getCurrentClass() {
+      return state.classes.find((c) => c.id === state.selectedClassId) || state.classes[0];
+    }
+
+    function scoreKey(studentId, subjectName) {
+      return `${studentId}__${subjectName}`;
+    }
+
+    function getScoreObj(studentId, subjectName) {
+      const k = scoreKey(studentId, subjectName);
+      if (!state.scores[k]) {
+        state.scores[k] = {
+          f1_m1: "", f1_m2: "", f1_m3: "",
+          midterm: "",
+          f2_m1: "", f2_m2: "", f2_m3: "",
+          final1: "",
+          final2: ""
+        };
+      }
+      return state.scores[k];
+    }
+
+    function numOrNull(val) {
+      if (val === "" || val === null || val === undefined) return null;
+      const n = Number(val);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function roundUpHalfOrInt(val) {
+      if (val === null || !Number.isFinite(val)) return null;
+      return Math.ceil(val);
+    }
+
+    function computeTermAvg(m1, m2, m3) {
+      const vals = [numOrNull(m1), numOrNull(m2), numOrNull(m3)].filter((x) => x !== null);
+      if (!vals.length) return null;
+      return vals.reduce((a, b) => a + b, 0) / vals.length;
+    }
+
+    function computeAnnualEffort(sc) {
+      const f1Avg = computeTermAvg(sc.f1_m1, sc.f1_m2, sc.f1_m3);
+      const f2Avg = computeTermAvg(sc.f2_m1, sc.f2_m2, sc.f2_m3);
+      const mid = numOrNull(sc.midterm);
+      const parts = [f1Avg, mid, f2Avg].filter((x) => x !== null);
+      if (!parts.length) return null;
+      const raw = parts.reduce((a, b) => a + b, 0) / parts.length;
+      return roundUpHalfOrInt(raw);
+    }
+
+    function getGeneralExemptStudentsSet(classObj, sectionName) {
+      const exemptIds = new Set();
+      if (!state.config.generalExemptEnabled) return exemptIds;
+      const subjects = classObj.subjects || [];
+      if (!subjects.length) return exemptIds;
+      const reqAvg = Number(state.config.generalExemptAvg) || 85;
+      const minSub = Number(state.config.generalExemptMinSubject) || 75;
+
+      const secStudents = state.students.filter(
+        (s) => s.classId === classObj.id && s.section === sectionName
+      );
+
+      for (const st of secStudents) {
+        const efforts = [];
+        let hasAll = true;
+        for (const subj of subjects) {
+          const eff = computeAnnualEffort(getScoreObj(st.id, subj));
+          if (eff === null || eff < minSub) {
+            hasAll = false;
+            break;
+          }
+          efforts.push(eff);
+        }
+        if (hasAll && efforts.length === subjects.length) {
+          const avg = efforts.reduce((a, b) => a + b, 0) / efforts.length;
+          if (avg >= reqAvg) {
+            exemptIds.add(st.id);
+          }
+        }
+      }
+      return exemptIds;
+    }
+
+    function evaluateStudentSubject(studentId, subjectName, isGeneralExempt) {
+      const sc = getScoreObj(studentId, subjectName);
+      const effort = computeAnnualEffort(sc);
+      const passMark = Number(state.config.passMark) || 50;
+      const indExemptMark = Number(state.config.individualExemptMark) || 90;
+
+      if (isGeneralExempt) {
+        return {
+          effort,
+          final1Total: effort,
+          final2Total: null,
+          status: "معفي إعفاء عام",
+          badgeClass: "b-exempt",
+          lockFinals: true
+        };
+      }
+
+      if (effort !== null && effort >= indExemptMark) {
+        return {
+          effort,
+          final1Total: effort,
+          final2Total: null,
+          status: "معفي إعفاء فردي",
+          badgeClass: "b-exempt",
+          lockFinals: true
+        };
+      }
+
+      const f1Exam = numOrNull(sc.final1);
+      let final1Total = null;
+      if (effort !== null && f1Exam !== null) {
+        final1Total = roundUpHalfOrInt(effort * 0.4 + f1Exam * 0.6);
+      } else if (f1Exam !== null) {
+        final1Total = roundUpHalfOrInt(f1Exam);
+      }
+
+      if (final1Total !== null && final1Total >= passMark) {
+        return {
+          effort,
+          final1Total,
+          final2Total: null,
+          status: "ناجح دور أول",
+          badgeClass: "b-pass",
+          lockFinals: false
+        };
+      }
+
+      const f2Exam = numOrNull(sc.final2);
+      let final2Total = null;
+      if (f2Exam !== null) {
+        if (effort !== null) {
+          final2Total = roundUpHalfOrInt(effort * 0.4 + f2Exam * 0.6);
+        } else {
+          final2Total = roundUpHalfOrInt(f2Exam);
+        }
+        if (final2Total >= passMark) {
+          return {
+            effort,
+            final1Total,
+            final2Total,
+            status: "ناجح دور ثاني",
+            badgeClass: "b-pass",
+            lockFinals: false
+          };
+        }
+        return {
+          effort,
+          final1Total,
+          final2Total,
+          status: "راسب",
+          badgeClass: "b-fail",
+          lockFinals: false
+        };
+      }
+
+      if (final1Total !== null && final1Total < passMark) {
+        return {
+          effort,
+          final1Total,
+          final2Total: null,
+          status: "مكمل",
+          badgeClass: "b-supp",
+          lockFinals: false
+        };
+      }
+
+      return {
+        effort,
+        final1Total,
+        final2Total: null,
+        status: "قيد الرصد",
+        badgeClass: "b-supp",
+        lockFinals: false
+      };
+    }
+
+    function renderMetaAndSelectors() {
+      const m = state.meta;
+      document.getElementById("viewDirectorate").textContent = m.directorate || "المديرية العامة للتربية";
+      document.getElementById("viewSubDept").textContent = m.subDept || "";
+      document.getElementById("viewSchool").textContent = m.school || "";
+      document.getElementById("viewPrincipal").textContent = m.principal || "-";
+      document.getElementById("viewTeacher").textContent = m.teacher || "-";
+      document.getElementById("viewYear").textContent = m.year || "-";
+      document.getElementById("viewThresholds").textContent =
+        `النجاح: ${state.config.passMark} | الإعفاء الفردي: ${state.config.individualExemptMark}`;
+      document.getElementById("rightsTextDisplay").textContent = m.rights || DEFAULT_RIGHTS;
+
+      const logoBox = document.getElementById("logoPreviewBox");
+      if (m.logo) {
+        logoBox.innerHTML = `<img src="${m.logo}" alt="شعار" />`;
+      } else {
+        logoBox.textContent = "شعار";
+      }
+
+      const clsSelect = document.getElementById("classSelect");
+      clsSelect.innerHTML = state.classes
+        .map((c) => `<option value="${c.id}" ${c.id === state.selectedClassId ? "selected" : ""}>${c.name}</option>`)
+        .join("");
+
+      const curClass = getCurrentClass();
+      if (!curClass.sections.includes(state.selectedSection)) {
+        state.selectedSection = curClass.sections[0] || "";
+      }
+      if (!curClass.subjects.includes(state.selectedSubject)) {
+        state.selectedSubject = curClass.subjects[0] || "";
+      }
+
+      document.getElementById("sectionSelect").innerHTML = curClass.sections
+        .map((sec) => `<option value="${sec}" ${sec === state.selectedSection ? "selected" : ""}>شعبة ${sec}</option>`)
+        .join("");
+
+      document.getElementById("subjectSelect").innerHTML = curClass.subjects
+        .map((sub) => `<option value="${sub}" ${sub === state.selectedSubject ? "selected" : ""}>${sub}</option>`)
+        .join("");
+    }
+
+    function onClassChange() {
+      state.selectedClassId = document.getElementById("classSelect").value;
+      const curClass = getCurrentClass();
+      state.selectedSection = curClass.sections[0] || "";
+      state.selectedSubject = curClass.subjects[0] || "";
+      persistState(true);
+      renderAll();
+    }
+
+    function renderTable() {
+      const curClass = getCurrentClass();
+      const sec = state.selectedSection;
+      const subj = state.selectedSubject;
+      const query = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+
+      const secStudents = state.students.filter(
+        (s) => s.classId === curClass.id && s.section === sec
+      );
+      const filtered = query
+        ? secStudents.filter((s) => s.name.toLowerCase().includes(query))
+        : secStudents;
+
+      const genExemptSet = getGeneralExemptStudentsSet(curClass, sec);
+      const tbody = document.getElementById("gradesTbody");
+
+      let counts = { total: secStudents.length, pass: 0, fail: 0, supp: 0, exempt: 0 };
+
+      for (const st of secStudents) {
+        const ev = evaluateStudentSubject(st.id, subj, genExemptSet.has(st.id));
+        if (ev.status.includes("معفي")) counts.exempt++;
+        else if (ev.status.includes("ناجح")) counts.pass++;
+        else if (ev.status === "راسب") counts.fail++;
+        else if (ev.status === "مكمل") counts.supp++;
+      }
+
+      document.getElementById("statsRow").innerHTML = `
+        <div class="stat-box"><div class="stat-num">${counts.total}</div><div class="stat-label">إجمالي الطلاب</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--exempt);">${counts.exempt}</div><div class="stat-label">معفي (عام / فردي)</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--success);">${counts.pass}</div><div class="stat-label">ناجح</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--warning);">${counts.supp}</div><div class="stat-label">مكمل</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--danger);">${counts.fail}</div><div class="stat-label">راسب</div></div>
+      `;
+
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="18" style="padding:20px;color:var(--muted);">لا يوجد طلاب في هذه الشعبة بعد. اضغط على "+ إضافة طلاب" للبدء.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered
+        .map((st, idx) => {
+          const sc = getScoreObj(st.id, subj);
+          const f1Avg = computeTermAvg(sc.f1_m1, sc.f1_m2, sc.f1_m3);
+          const f2Avg = computeTermAvg(sc.f2_m1, sc.f2_m2, sc.f2_m3);
+          const ev = evaluateStudentSubject(st.id, subj, genExemptSet.has(st.id));
+          const lockAttr = ev.lockFinals ? "disabled" : "";
+          const lock2Attr = ev.lockFinals || (ev.final1Total !== null && ev.final1Total >= (Number(state.config.passMark) || 50)) ? "disabled" : "";
+
+          const mkInp = (field, val, extraDisabled = "") =>
+            `<input type="number" min="0" max="100" value="${val ?? ""}" ${extraDisabled} onchange="onScoreChange('${st.id}','${field}',this.value)" />`;
+
+          return `
+            <tr>
+              <td>${idx + 1}</td>
+              <td class="student-name-cell">${escapeHtml(st.name)}</td>
+              <td>${mkInp("f1_m1", sc.f1_m1)}</td>
+              <td>${mkInp("f1_m2", sc.f1_m2)}</td>
+              <td>${mkInp("f1_m3", sc.f1_m3)}</td>
+              <td><strong>${f1Avg !== null ? f1Avg.toFixed(1) : "-"}</strong></td>
+              <td>${mkInp("midterm", sc.midterm)}</td>
+              <td>${mkInp("f2_m1", sc.f2_m1)}</td>
+              <td>${mkInp("f2_m2", sc.f2_m2)}</td>
+              <td>${mkInp("f2_m3", sc.f2_m3)}</td>
+              <td><strong>${f2Avg !== null ? f2Avg.toFixed(1) : "-"}</strong></td>
+              <td><strong>${ev.effort !== null ? ev.effort : "-"}</strong></td>
+              <td>${mkInp("final1", sc.final1, lockAttr)}</td>
+              <td><strong>${ev.final1Total !== null ? ev.final1Total : "-"}</strong></td>
+              <td>${mkInp("final2", sc.final2, lock2Attr)}</td>
+              <td><strong>${ev.final2Total !== null ? ev.final2Total : "-"}</strong></td>
+              <td><span class="badge ${ev.badgeClass}">${ev.status}</span></td>
+              <td class="no-print"><button class="btn btn-danger btn-sm" onclick="deleteStudent('${st.id}')">حذف</button></td>
+            </tr>
+          `;
+        })
+        .join("");
+    }
+
+    function renderAll() {
+      renderMetaAndSelectors();
+      renderTable();
+    }
+
+    function onScoreChange(studentId, field, value) {
+      const sc = getScoreObj(studentId, state.selectedSubject);
+      if (value === "") {
+        sc[field] = "";
+      } else {
+        let n = Number(value);
+        if (!Number.isFinite(n)) n = 0;
+        if (n < 0) n = 0;
+        if (n > 100) n = 100;
+        sc[field] = n;
+      }
+      persistState(true);
+      renderTable();
+    }
+
+    function addSingleStudent() {
+      const inp = document.getElementById("singleStudentInput");
+      const name = (inp.value || "").trim();
+      if (!name) return;
+      const curClass = getCurrentClass();
+      state.students.push({
+        id: "st-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+        name,
+        classId: curClass.id,
+        section: state.selectedSection
+      });
+      inp.value = "";
+      persistState(true);
+      renderTable();
+      showToast("تمت إضافة الطالب");
+    }
+
+    function addBulkStudents() {
+      const ta = document.getElementById("bulkStudentsInput");
+      const lines = (ta.value || "")
+        .split(/\r?\n/)
+        .map((l) => l.replace(/^\d+[\).\-\s]+/, "").trim())
+        .filter(Boolean);
+      if (!lines.length) return;
+      const curClass = getCurrentClass();
+      for (const name of lines) {
+        state.students.push({
+          id: "st-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
+          name,
+          classId: curClass.id,
+          section: state.selectedSection
+        });
+      }
+      ta.value = "";
+      closeModal("studentModal");
+      persistState(true);
+      renderTable();
+      showToast(`تمت إضافة ${lines.length} طالب`);
+    }
+
+    function importStudentsFromFile(ev) {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const text = String(reader.result || "");
+        const lines = text
+          .split(/\r?\n/)
+          .map((row) => row.split(",")[0].replace(/^\d+[\).\-\s]+/, "").trim())
+          .filter(Boolean);
+        const curClass = getCurrentClass();
+        for (const name of lines) {
+          state.students.push({
+            id: "st-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
+            name,
+            classId: curClass.id,
+            section: state.selectedSection
+          });
+        }
+        ev.target.value = "";
+        closeModal("studentModal");
+        persistState(true);
+        renderTable();
+        showToast(`تم استيراد ${lines.length} اسم`);
+      };
+      reader.readAsText(file, "utf-8");
+    }
+
+    function deleteStudent(id) {
+      state.students = state.students.filter((s) => s.id !== id);
+      persistState(true);
+      renderTable();
+      showToast("تم حذف الطالب");
+    }
+
+    function renderStructureAdmin() {
+      const curClass = getCurrentClass();
+      document.getElementById("sectionsListAdmin").innerHTML = curClass.sections
+        .map((sec) => `<li>شعبة ${escapeHtml(sec)}</li>`)
+        .join("");
+      document.getElementById("subjectsListAdmin").innerHTML = curClass.subjects
+        .map((sub) => `<li>${escapeHtml(sub)}</li>`)
+        .join("");
+    }
+
+    function addClassItem() {
+      const name = (document.getElementById("newClassName").value || "").trim();
+      if (!name) return;
+      const id = "cls-" + Date.now();
+      state.classes.push({
+        id,
+        name,
+        sections: ["أ"],
+        subjects: ["الرياضيات", "اللغة العربية"]
+      });
+      state.selectedClassId = id;
+      state.selectedSection = "أ";
+      state.selectedSubject = "الرياضيات";
+      document.getElementById("newClassName").value = "";
+      persistState(true);
+      renderStructureAdmin();
+      renderAll();
+      showToast("تمت إضافة الصف");
+    }
+
+    function addSectionItem() {
+      const sec = (document.getElementById("newSectionName").value || "").trim();
+      if (!sec) return;
+      const curClass = getCurrentClass();
+      if (!curClass.sections.includes(sec)) {
+        curClass.sections.push(sec);
+      }
+      state.selectedSection = sec;
+      document.getElementById("newSectionName").value = "";
+      persistState(true);
+      renderStructureAdmin();
+      renderAll();
+      showToast("تمت إضافة الشعبة");
+    }
+
+    function addSubjectItem() {
+      const sub = (document.getElementById("newSubjectName").value || "").trim();
+      if (!sub) return;
+      const curClass = getCurrentClass();
+      if (!curClass.subjects.includes(sub)) {
+        curClass.subjects.push(sub);
+      }
+      state.selectedSubject = sub;
+      document.getElementById("newSubjectName").value = "";
+      persistState(true);
+      renderStructureAdmin();
+      renderAll();
+      showToast("تمت إضافة المادة");
+    }
+
+    function saveExemptionConfig() {
+      state.config.passMark = Number(document.getElementById("cfgPassMark").value) || 50;
+      state.config.individualExemptMark = Number(document.getElementById("cfgIndividualExempt").value) || 90;
+      state.config.generalExemptEnabled = document.getElementById("cfgGeneralEnabled").value === "true";
+      state.config.generalExemptAvg = Number(document.getElementById("cfgGeneralAvg").value) || 85;
+      state.config.generalExemptMinSubject = Number(document.getElementById("cfgGeneralMinSubject").value) || 75;
+      closeModal("exemptionModal");
+      persistState(true);
+      renderAll();
+      showToast("تم حفظ إعدادات الإعفاء والدرجات");
+    }
+
+    function openGeneralExemptionReport() {
+      const curClass = getCurrentClass();
+      const sec = state.selectedSection;
+      const subjects = curClass.subjects || [];
+      const genExemptSet = getGeneralExemptStudentsSet(curClass, sec);
+      const secStudents = state.students.filter(
+        (s) => s.classId === curClass.id && s.section === sec
+      );
+
+      let html = `
+        <p style="font-size:13px;color:var(--muted);">
+          الشرط الحالي للإعفاء العام: معدل السعي السنوي ≥ <strong>${state.config.generalExemptAvg}</strong>
+          وأدنى سعي لأي مادة ≥ <strong>${state.config.generalExemptMinSubject}</strong>.
+        </p>
+        <div class="table-wrap"><table style="min-width:600px;"><thead><tr>
+          <th>ت</th><th>الطالب</th>${subjects.map((s) => `<th>${escapeHtml(s)}</th>`).join("")}<th>المعدل العام</th><th>الحالة</th>
+        </tr></thead><tbody>
+      `;
+
+      secStudents.forEach((st, i) => {
+        const efforts = subjects.map((s) => computeAnnualEffort(getScoreObj(st.id, s)));
+        const valid = efforts.filter((x) => x !== null);
+        const avg = valid.length === subjects.length && valid.length
+          ? (valid.reduce((a, b) => a + b, 0) / valid.length).toFixed(1)
+          : "-";
+        const isGen = genExemptSet.has(st.id);
+        html += `
+          <tr>
+            <td>${i + 1}</td>
+            <td style="text-align:right;font-weight:700;">${escapeHtml(st.name)}</td>
+            ${efforts.map((e) => `<td>${e !== null ? e : "-"}</td>`).join("")}
+            <td><strong>${avg}</strong></td>
+            <td><span class="badge ${isGen ? "b-exempt" : "b-supp"}">${isGen ? "معفي إعفاء عام" : "غير مستوفٍ"}</span></td>
+          </tr>
+        `;
+      });
+
+      html += "</tbody></table></div>";
+      document.getElementById("generalReportBody").innerHTML = html;
+      openModal("generalReportModal");
+    }
+
+    function handleLogoUpload(ev) {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = 160;
+          canvas.height = 160;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, 160, 160);
+          state.meta.logo = canvas.toDataURL("image/png", 0.85);
+          renderMetaAndSelectors();
+          showToast("تم تحميل الشعار");
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearLogo() {
+      state.meta.logo = "";
+      renderMetaAndSelectors();
+      showToast("تمت إزالة الشعار");
+    }
+
+    function saveHeaderSettings() {
+      state.meta.directorate = document.getElementById("inpDirectorate").value.trim();
+      state.meta.subDept = document.getElementById("inpSubDept").value.trim();
+      state.meta.school = document.getElementById("inpSchool").value.trim();
+      state.meta.principal = document.getElementById("inpPrincipal").value.trim();
+      state.meta.teacher = document.getElementById("inpTeacher").value.trim();
+      state.meta.year = document.getElementById("inpYear").value.trim();
+      const r = document.getElementById("inpRights").value.trim();
+      state.meta.rights = r || DEFAULT_RIGHTS;
+      closeModal("headerModal");
+      persistState(true);
+      renderMetaAndSelectors();
+      showToast("تم حفظ الترويسة وحقوق التصميم");
+    }
+
+    function exportCSV() {
+      const curClass = getCurrentClass();
+      const sec = state.selectedSection;
+      const subj = state.selectedSubject;
+      const genExemptSet = getGeneralExemptStudentsSet(curClass, sec);
+      const secStudents = state.students.filter(
+        (s) => s.classId === curClass.id && s.section === sec
+      );
+
+      const headers = [
+        "ت", "اسم الطالب", "ف1 شهر1", "ف1 شهر2", "ف1 شهر3", "نصف السنة",
+        "ف2 شهر1", "ف2 شهر2", "ف2 شهر3", "السعي السنوي",
+        "نهائي دور 1", "نهائية دور 1", "نهائي دور 2", "نهائية دور 2", "النتيجة النهائية"
+      ];
+
+      const rows = secStudents.map((st, idx) => {
+        const sc = getScoreObj(st.id, subj);
+        const ev = evaluateStudentSubject(st.id, subj, genExemptSet.has(st.id));
+        return [
+          idx + 1, `"${st.name.replace(/"/g, '""')}"`,
+          sc.f1_m1, sc.f1_m2, sc.f1_m3, sc.midterm,
+          sc.f2_m1, sc.f2_m2, sc.f2_m3,
+          ev.effort ?? "", sc.final1, ev.final1Total ?? "",
+          sc.final2, ev.final2Total ?? "", `"${ev.status}"`
+        ].join(",");
+      });
+
+      const bom = "\uFEFF";
+      const blob = new Blob([bom + [headers.join(","), ...rows].join("\n")], {
+        type: "text/csv;charset=utf-8;"
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `سجل_${curClass.name}_${sec}_${subj}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("تم تصدير ملف CSV");
+    }
+
+    function exportBackupJSON() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `نسخة_احتياطية_سجل_الدرجات_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("تم تصدير النسخة الاحتياطية");
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function setupPWA() {
+      const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="36" fill="#0f4c81"/><text x="96" y="114" text-anchor="middle" fill="#ffffff" font-size="64" font-family="Arial,sans-serif" font-weight="bold">سجل</text></svg>`;
+      const iconUrl = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(iconSvg);
+      document.getElementById("apple-touch-icon").href = iconUrl;
+
+      const manifestObj = {
+        name: "سجل الدرجات الإلكتروني للمدرس",
+        short_name: "سجل الدرجات",
+        start_url: "./",
+        display: "standalone",
+        background_color: "#f1f5f9",
+        theme_color: "#0f4c81",
+        dir: "rtl",
+        lang: "ar",
+        icons: [{ src: iconUrl, sizes: "192x192", type: "image/svg+xml", purpose: "any" }]
+      };
+      const mBlob = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
+      document.getElementById("dynamic-manifest").href = URL.createObjectURL(mBlob);
+
+      if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+        const swCode = `
+          const CACHE_NAME = "gradebook-pwa-v1";
+          self.addEventListener("install", (e) => {
+            e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(["./"])));
+            self.skipWaiting();
+          });
+          self.addEventListener("fetch", (e) => {
+            if (e.request.method !== "GET") return;
+            e.respondWith(caches.match(e.request).then((r) => r || fetch(e.request)));
+          });
+        `;
+        const swBlob = new Blob([swCode], { type: "application/javascript" });
+        navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+      }
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+      });
+    }
+
+    async function triggerInstall() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+      } else {
+        openModal("installGuideModal");
+      }
+    }
+
+    window.addEventListener("beforeunload", () => {
+      try {
+        state.updatedAt = Date.now();
+        const s = JSON.stringify(state);
+        localStorage.setItem(LS_KEY, s);
+        localStorage.setItem(LS_MIRROR, s);
+      } catch (_) {}
+    });
+
+    (async function init() {
+      setupPWA();
+      await loadState();
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
